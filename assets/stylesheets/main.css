@@ -1,0 +1,349 @@
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/** 
+* General styles
+*/
+body {
+  margin: 0;
+  max-width: 1440px;
+  margin: auto;
+}
+
+h1,
+h2 {
+  margin: 0%;
+}
+
+/**
+* Basic styles for links
+*/
+a {
+  text-decoration: none;
+}
+
+/**
+ * Basic typography style
+ */
+body {
+  font-family: "DM Sans", sans-serif;
+}
+
+h1 {
+  color: #901c1c;
+}
+
+h1,
+h2 {
+  font-size: 2.25em;
+  font-weight: 400;
+}
+
+.name {
+  color: #d3573c;
+}
+
+.location {
+  color: #901c1c;
+}
+
+/* ********** home page */
+/* photographer card */
+.photographers__section {
+  /* style with font-size more accessible */
+}
+.photographers__section .photographer {
+  text-align: center;
+}
+.photographers__section .photographer__location {
+  font-size: 1.2em;
+}
+.photographers__section .photographer__tagline {
+  font-size: 0.9em;
+}
+.photographers__section .photographer__price {
+  font-size: 0.8em;
+  color: #525252;
+}
+
+/* ********** photographer page */
+/***** photographer profile */
+.photographer__presentation-name {
+  font-size: 4em;
+}
+.photographer__presentation-location {
+  font-size: 1.5em;
+}
+.photographer__presentation-tagline {
+  font-size: 1.125em;
+  color: #525252;
+}
+
+/***** photographer gallery */
+/* media card */
+.media-card__under-picture-container {
+  color: #901c1c;
+}
+.media-card__title, .media-card__likes {
+  font-size: 1.5rem;
+}
+.media-card__title {
+  font-weight: 400;
+}
+.media-card__likes {
+  font-weight: 500;
+}
+.media-card__likes-heart {
+  color: #901c1c;
+  font-size: 1.3rem;
+}
+
+/***** photographer infos  */
+.photographer__infos {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+/**
+ * Hide text while making it readable for screen readers
+ */
+.hide-text {
+  overflow: hidden;
+  padding: 0;
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  padding: 70px 100px;
+}
+header .logo {
+  height: 50px;
+}
+
+form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+form label {
+  color: #312e2e;
+  font-size: 36px;
+}
+form div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: self-start;
+  margin-bottom: 26px;
+}
+form input {
+  width: 100%;
+  height: 68px;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal {
+  border-radius: 5px;
+  background-color: #db8876;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 35px;
+  margin: auto;
+}
+.modal header {
+  justify-content: space-between;
+  width: 100%;
+}
+.modal header img {
+  cursor: pointer;
+}
+.modal header h2 {
+  font-size: 64px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.photographer {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.photographer__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.photographer__name {
+  margin-top: 15px;
+  margin-bottom: 0%;
+}
+.photographer p {
+  margin: 0%;
+  padding-top: 3px;
+}
+
+.media-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: fit-content 1fr;
+  width: 350px;
+}
+.media-card__link {
+  height: 300px;
+  width: 350px;
+  background-color: #fafafa;
+}
+.media-card__picture {
+  height: 300px;
+  width: 350px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+.media-card__under-picture-container, .media-card__likes-container {
+  display: flex;
+}
+.media-card__under-picture-container {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.media-card__under-picture-container h3,
+.media-card__under-picture-container p,
+.media-card__under-picture-container button {
+  margin: 5px 0;
+}
+.media-card__likes-container {
+  align-items: center;
+}
+.media-card__likes-button {
+  border: none;
+  background: none;
+}
+
+/**
+* Picture style
+*/
+.profile-picture__container {
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  box-shadow: 0em 0.25em 0.75em rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.profile-picture {
+  height: 200px;
+  width: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transform: scale(1.5);
+  -o-object-position: 50% 30%;
+     object-position: 50% 30%;
+}
+
+.photographer__infos {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #db8876;
+  border-radius: 5px 5px 0px 0px;
+}
+.photographer__infos p {
+  margin: 15px 30px;
+}
+.photographer__infos-likes {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.photographers__section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+  gap: 70px;
+  margin: 50px 0px 100px 0px;
+}
+
+.photographer__header {
+  background-color: #fafafa;
+  height: 300px;
+  margin: 0 100px;
+  padding: 70px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.photographer__portfolio {
+  display: flex;
+  flex-direction: column;
+}
+.photographer__gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+  gap: 90px;
+  margin: 50px auto 100px auto;
+}
+
+#contact__modal {
+  display: none;
+}
+
+.contact__button {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 11px;
+  width: 170px;
+  height: 70px;
+  border: none;
+  background-color: #901c1c;
+  border-radius: 5px;
+  cursor: pointer;
+}

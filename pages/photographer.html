@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <!-- encoding definition -->
+  <meta charset="utf-8">
+  <!-- mobile optimization -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- compatible edge -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" type="image/png" href="../assets/medias/favicon.png">
+  <link href="../assets/stylesheets/main.css" rel="stylesheet" type="text/css">
+  <!-- font family -->
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <title>Fisheye - photographe </title>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html"><img src="../assets/medias/logo/logo.png" class="logo" alt="Page d'accueil Fisheye"></a>
+  </header>
+  <main id="main" class="photographer__main">
+    <!-- 
+        photographer profile is display in this section via javaScript 
+        (photographerTemplate -> createPhotographerProfile) 
+    -->
+    <section class="photographer__portfolio">
+      <div class="photographer__filter"></div>
+      <div class="photographer__gallery">
+        <!-- 
+        photographer's images/videos are display in this section via javaScript 
+        (photographerTemplate -> createMediaCard) 
+    -->
+      </div>
+    </section>
+  </main>
+  <!-- <dialog id="contact__modal">
+    <div class="modal">
+      <header>
+        <h2>Contactez-moi</h2>
+        <img src="../assets/icons/close.svg" onclick="closeModal()" alt="fermer la modale">
+      </header>
+      <form>
+        <div>
+          <label>Prénom</label>
+          <input>
+        </div>
+        <button class="contact__button">Envoyer</button>
+      </form>
+    </div>
+  </dialog> -->
+  <script type="module" src="/scripts/pages/Photographer.js"></script>
+  <!-- <script src="/scripts/utils/contactForm.js"></script> -->
+</body>
+
+</html>

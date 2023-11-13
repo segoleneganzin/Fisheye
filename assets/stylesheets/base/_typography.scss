@@ -1,0 +1,97 @@
+/**
+ * Basic typography style
+ */
+body {
+  font-family: $text-font;
+}
+h1 {
+  color: $principal-color;
+}
+h1,
+h2 {
+  font-size: 2.25em;
+  font-weight: 400;
+}
+
+.name {
+  color: $second-color;
+}
+.location {
+  color: $principal-color;
+}
+
+/* ********** home page */
+/* photographer card */
+.photographers__section {
+  // /* style with font-size of mock-up */
+  // .photographer {
+  //   text-align: center;
+  //   &__location {
+  //     font-size: 0.8125em;
+  //   }
+  //   &__tagline {
+  //     font-size: 0.625em;
+  //   }
+  //   &__price {
+  //     font-size: 0.5625em;
+  //     color: $dark-grey;
+  //   }
+  // }
+  /* style with font-size more accessible */
+  .photographer {
+    text-align: center;
+    &__location {
+      font-size: 1.2em;
+    }
+    &__tagline {
+      font-size: 0.9em;
+    }
+    &__price {
+      font-size: 0.8em;
+      color: $dark-grey;
+    }
+  }
+}
+
+/* ********** photographer page */
+/***** photographer profile */
+.photographer {
+  &__presentation {
+    &-name {
+      font-size: 4em;
+    }
+    &-location {
+      font-size: 1.5em;
+    }
+    &-tagline {
+      font-size: 1.125em;
+      color: $dark-grey;
+    }
+  }
+}
+/***** photographer gallery */
+/* media card */
+.media-card {
+  &__under-picture-container {
+    color: $principal-color;
+  }
+  &__title,
+  &__likes {
+    font-size: 1.5rem;
+  }
+  &__title {
+    font-weight: 400;
+  }
+  &__likes {
+    font-weight: 500;
+  }
+  &__likes-heart {
+    color: $principal-color;
+    font-size: 1.3rem;
+  }
+}
+/***** photographer infos  */
+.photographer__infos {
+  font-size: 1.5em;
+  font-weight: 500;
+}

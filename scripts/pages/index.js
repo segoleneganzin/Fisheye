@@ -1,28 +1,43 @@
-// import { photographerTemplate } from '../templates/photographer.js';
-async function getPhotographers() {
-  // Récupération des photographes depuis le fichier JSON
-  const reponse = await fetch('../../data/photographers.json');
-  const photographers = await reponse.json();
-  console.log(photographers);
-  return photographers;
-}
+/**
+ * controller of home page
+ */
+import { DbPhotographers } from '../db/DbPhotographers.js';
+import { IndexTemplate } from '../templates/IndexTemplate.js';
 
-async function displayData(photographers) {
-  const photographersSection = document.querySelector(
-    '.photographers__section'
-  );
+/**
+ * Executed when home page is loaded
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  init();
+});
 
-  photographers.forEach((photographer) => {
-    const photographerCard = photographerTemplate(photographer);
-    const userCardDOM = photographerCard.getUserCardDOM();
-    photographersSection.appendChild(userCardDOM);
-  });
-}
+/**
+ * Function that retrieves the div containing all the photographers and displays them
+ */
+const displayPhotographers = (photographers) => {
+  try {
+    const photographersSection = document.querySelector(
+      '.photographers__section'
+    );
+    photographers.forEach((photographer) => {
+      const card = IndexTemplate(photographer);
+      const cardDOM = card.createPhotographerCard();
+      photographersSection.appendChild(cardDOM);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-async function init() {
-  // Récupère les datas des photographes
-  const { photographers } = await getPhotographers();
-  displayData(photographers);
-}
-
-init();
+/**
+ * Function called on loading, retrieves data from photographers database
+ */
+const init = async () => {
+  try {
+    const datasPhotographers = DbPhotographers();
+    const { photographers } = await datasPhotographers.getPhotographers();
+    displayPhotographers(photographers);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
