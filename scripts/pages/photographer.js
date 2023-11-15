@@ -3,11 +3,19 @@
 /**
  * controller of photographer page
  */
-import { DbPhotographers } from '../db/DbPhotographers.js';
-import { DbMedia } from '../db/DbMedia.js';
-import { PhotographerTemplate } from '../templates/photographerTemplate.js';
+import { ApiPhotographers } from '../models/api/ApiPhotographers.js';
+import { ApiMedia } from '../models/api/ApiMedia.js';
+import { createPhotographer } from '../models/metier/Photographer.js';
+import { mediaFactory } from '../models/factories/MediaFactory.js';
+
+import { createPhotographerProfile } from '../templates/photographerProfileTemplate.js';
+import { createPhotographerMediaCard } from '../templates/photographerMediaCardTemplate.js';
+import { createPhotographerInfos } from '../templates/photographerInfosTemplate.js';
+
+import { initModal } from '../utils/modal.js';
+
 /**
- * Executed when home page is loaded
+ * Executed when photographer page is loaded
  */
 document.addEventListener('DOMContentLoaded', function () {
   init();
@@ -18,13 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
  * and displays the profile data
  * @param {array} photographer
  */
-const displayPhotographerProfile = (photographer, photographerTemplate) => {
+const displayPhotographerProfile = (photographer) => {
   try {
-    const photographerMain = document.querySelector('.photographer__main');
-    const photographerHeaderDOM =
-      photographerTemplate.createPhotographerProfile(photographer);
+    const photographerMain = document.querySelector('.main');
+    const photographerProfileDOM = createPhotographerProfile(photographer);
     photographerMain.insertBefore(
-      photographerHeaderDOM,
+      photographerProfileDOM,
       photographerMain.firstChild
     );
   } catch (error) {
@@ -36,13 +43,19 @@ const displayPhotographerProfile = (photographer, photographerTemplate) => {
  * and displays the profile data
  * @param {array} photographer
  */
-const displayPhotographerGallery = (medias, photographerTemplate) => {
+const displayPhotographerGallery = (medias, photographerName) => {
   try {
     const photographerGallery = document.querySelector(
       '.photographer__gallery'
     );
+    // path to picture (only firstname is needed)
+    const pictureNameRepository = photographerName.split(' ')[0];
     medias.forEach((media) => {
-      const mediaArticleDOM = photographerTemplate.createMediaCard(media);
+      media = mediaFactory(media);
+      const mediaArticleDOM = createPhotographerMediaCard(
+        media,
+        pictureNameRepository
+      );
       photographerGallery.appendChild(mediaArticleDOM);
     });
   } catch (error) {
@@ -54,10 +67,10 @@ const displayPhotographerGallery = (medias, photographerTemplate) => {
  * Function that retrieves the div containing the photographer's infos (total likes + daily rate)
  * @param {array} photographer
  */
-const displayPhotographerInfos = (photographerTemplate) => {
+const displayPhotographerInfos = (photographer) => {
   try {
-    const photographerMain = document.querySelector('.photographer__main');
-    const photographerInfosDOM = photographerTemplate.createPhotographerInfos();
+    const photographerMain = document.querySelector('.main');
+    const photographerInfosDOM = createPhotographerInfos(photographer);
     photographerMain.appendChild(photographerInfosDOM);
   } catch (error) {
     console.log(error.message);
@@ -71,21 +84,42 @@ const init = async () => {
   try {
     let params = new URL(document.location).searchParams;
     const idPhotographer = params.get('id');
-    const datasPhotographer = DbPhotographers();
-    const photographer = await datasPhotographer.getPhotographerById(
+    const datasPhotographer = ApiPhotographers();
+    let photographer = await datasPhotographer.getPhotographerById(
       idPhotographer
     );
     // if id is empty or doesn't exist in database --> home redirection
     if (!photographer) {
       window.location.href = '../index.html';
     } else {
-      const datasMedia = DbMedia();
+      photographer = createPhotographer(photographer);
+      console.log(photographer);
+      const datasMedia = ApiMedia();
       const medias = await datasMedia.getMediasByPhotographerId(idPhotographer);
       console.log(medias);
-      const photographerTemplate = PhotographerTemplate(photographer);
-      displayPhotographerProfile(photographer, photographerTemplate);
-      displayPhotographerGallery(medias, photographerTemplate);
-      displayPhotographerInfos(photographerTemplate);
+      displayPhotographerProfile(photographer);
+      displayPhotographerGallery(medias, photographer.name);
+      displayPhotographerInfos(photographer);
+      // manage contact modal
+      const openModalBtn = document.querySelector(
+        '.contact__modal-open-button'
+      );
+      const closeModalBtn = document.querySelector(
+        '.contact__modal-close-button'
+      );
+      // display name on modal title
+      const nameTitle = document.getElementById(
+        'contact__modal-photographer-name'
+      );
+      nameTitle.textContent = `${photographer.name}`;
+
+      let modalForm = initModal('contact__modal');
+      openModalBtn.addEventListener('click', () => {
+        modalForm.displayModal();
+      });
+      closeModalBtn.addEventListener('click', () => {
+        modalForm.closeModal();
+      });
     }
   } catch (error) {
     console.log(error.message);

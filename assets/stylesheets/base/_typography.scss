@@ -20,23 +20,28 @@ h2 {
   color: $principal-color;
 }
 
+.button {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+/* ********** form */
+form {
+  .label {
+    color: #312e2e;
+    font-size: 2.25em;
+  }
+  .error-message {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: black;
+  }
+}
+
 /* ********** home page */
 /* photographer card */
 .photographers__section {
-  // /* style with font-size of mock-up */
-  // .photographer {
-  //   text-align: center;
-  //   &__location {
-  //     font-size: 0.8125em;
-  //   }
-  //   &__tagline {
-  //     font-size: 0.625em;
-  //   }
-  //   &__price {
-  //     font-size: 0.5625em;
-  //     color: $dark-grey;
-  //   }
-  // }
   /* style with font-size more accessible */
   .photographer {
     text-align: center;
@@ -51,6 +56,20 @@ h2 {
       color: $dark-grey;
     }
   }
+  // /* style with font-size of mock-up */
+  // .photographer {
+  //   text-align: center;
+  //   &__location {
+  //     font-size: 0.8125em;
+  //   }
+  //   &__tagline {
+  //     font-size: 0.625em;
+  //   }
+  //   &__price {
+  //     font-size: 0.5625em;
+  //     color: $dark-grey;
+  //   }
+  // }
 }
 
 /* ********** photographer page */
@@ -94,4 +113,15 @@ h2 {
 .photographer__infos {
   font-size: 1.5em;
   font-weight: 500;
+}
+
+/***** contact modal  */
+.contact__modal {
+  &-header {
+    h2 {
+      font-size: 64px;
+      font-weight: normal;
+      text-align: left;
+    }
+  }
 }
