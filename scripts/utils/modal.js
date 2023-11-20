@@ -1,23 +1,41 @@
-/* eslint-disable no-unused-vars */
 /*********************************************************************************
 *
 * This file contains all the functions required to manage modal
+* The modal is reusable, only the content can be modified
 *
 /*********************************************************************************/
 import { initContactForm } from '../utils/contactForm.js';
+import { initLightBox } from '../utils/lightBox.js';
+import { manageAccessibilityFocus } from './accessibility.js';
+
 /**
  * modal initialization
  * To reuse the modal, initialize the content
  * according to the parameter passed (modalElementId).
+ * elementDOM permitted to refocused on clicked element when closed modal
  * @param {string} modalElementId
+ * @param {object} photographer (optional)
+ * @param {object} media (optional)
+ * @param {string} pictureNameRepository (optional)
+ * @param {array<object>} medias (optional)
  * @returns
  */
-const initModal = (modalElementId) => {
+const initModal = (
+  modalElementId,
+  elementDOM,
+  photographer,
+  media,
+  pictureNameRepository,
+  medias
+) => {
   const body = document.querySelector('body');
   const photographerMain = document.querySelector('.main');
   const closeModalBtn = document.querySelector(
     `.${modalElementId}-close-button`
   );
+  closeModalBtn.addEventListener('click', () => {
+    closeModal();
+  });
   const modal = document.getElementById(modalElementId);
   const firstFocusElement = closeModalBtn;
   const lastFocusElement = document.querySelector(
@@ -31,8 +49,17 @@ const initModal = (modalElementId) => {
     body.classList.add('no-scroll');
     photographerMain.setAttribute('aria-hidden', 'true');
     // initialize element depend of modalElementId
-    if (modalElementId === 'contact__modal') {
-      initContactForm(closeModal);
+    switch (modalElementId) {
+      // contact form
+      case 'modal__contact':
+        initContactForm(closeModal, photographer);
+        break;
+      // media lightbox
+      case 'modal__lightbox':
+        initLightBox(pictureNameRepository, media, medias);
+        break;
+      default:
+        console.log(`${modalElementId} doesn't match with cases`);
     }
   };
 
@@ -41,36 +68,19 @@ const initModal = (modalElementId) => {
     photographerMain.setAttribute('aria-hidden', 'false');
     modal.setAttribute('aria-hidden', 'true');
     body.classList.remove('no-scroll');
+    elementDOM.focus();
   };
 
-  // accessibility with key
-  document.addEventListener('keydown', (e) => {
-    // Close modal when escape key is pressed
-    if (
-      modal.getAttribute('aria-hidden') == 'false' &&
-      (e.key === 'Escape' || e.code === 'Escape')
-    ) {
-      closeModal();
-    }
-    // Trap focus into modal
-    if (
-      modal.getAttribute('aria-hidden') == 'false' &&
-      (e.key === 'Tab' || e.code === 'Tab')
-    ) {
-      if (e.shiftKey) {
-        /* shift + tab */
-        if (document.activeElement === firstFocusElement) {
-          lastFocusElement.focus();
-          e.preventDefault();
-        }
-      } /* tab */ else {
-        if (document.activeElement === lastFocusElement) {
-          firstFocusElement.focus();
-          e.preventDefault();
-        }
-      }
-    }
-  });
+  // accessibility
+  manageAccessibilityFocus(
+    modal,
+    'aria-hidden',
+    'false',
+    closeModal,
+    firstFocusElement,
+    lastFocusElement
+  );
+
   return { displayModal, closeModal };
 };
 export { initModal };

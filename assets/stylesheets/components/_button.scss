@@ -3,12 +3,13 @@
 // -----------------------------------------------------------------------------
 .button {
   padding: 22px 11px;
-  border: none;
   background-color: $principal-color;
   border-radius: $btn-border-radius;
-  cursor: pointer;
 }
 
 button {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 0%;
 }

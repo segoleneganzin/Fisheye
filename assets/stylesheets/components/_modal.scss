@@ -1,0 +1,33 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  background: rgba(196, 196, 196, 0.4);
+  &__container {
+    animation-name: modalOpen;
+    animation-duration: 0.5s;
+  }
+  &__close-button {
+    position: absolute;
+    background: none;
+    border: none;
+    padding: 15px;
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

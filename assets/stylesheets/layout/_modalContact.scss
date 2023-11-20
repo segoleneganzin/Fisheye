@@ -1,18 +1,7 @@
 // -----------------------------------------------------------------------------
 // This file contains styles that are specific to the contact modale.
 // -----------------------------------------------------------------------------
-#contact__modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: auto;
-  background: rgba(196, 196, 196, 0.4);
-}
-.contact__modal {
+.modal__contact {
   border-radius: $box-border-radius;
   background-color: $third-color;
   width: 50%;
@@ -31,14 +20,22 @@
     margin-bottom: 15px;
   }
   &-close-button {
-    position: absolute;
     top: 10px;
     right: -15px;
-    background: none;
-    border: none;
-    padding: 15px;
-    img {
-      cursor: pointer;
+  }
+  &-validation {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 70vh;
+    width: 100%;
+    p {
+      margin: auto;
+    }
+    button {
+      padding: 20px 50px;
+      margin-bottom: 25px;
     }
   }
 }
