@@ -1,38 +1,42 @@
+/*********************************************************************************
+*
+* This file manage vue of media's lightbox (image or video) into modal
+*
+/*********************************************************************************/
+
 /**
- * Function that creates an article to display a photographer's image or video
+ * Function that creates an article to display photographer's media
  * @param {string} pictureNameRepository
  * @param {object} media
  * @returns {html}
  */
-export const createPhotographerLightBox = (pictureNameRepository, media) => {
-  const { title, src, type } = media;
-
-  const picture = `../../assets/medias/photographers/${pictureNameRepository}/${src}`;
+export const displayPhotographerLightbox = (pictureNameRepository, media) => {
   // article container
-  const mediaLightBox = document.querySelector('.modal__lightbox-media');
-  // manage depends of media type format(image or video)
+  const mediaLightbox = document.querySelector('.modal__lightbox-media');
+  const picture = `../../assets/medias/photographers/${pictureNameRepository}/${media.src}`;
+  // manage dom depends of media type format(image or video)
   let mediaPicture;
-  if (type === 'image' && src != null) {
+  if (media.type === 'image' && media.src != null) {
     mediaPicture = `
-      
-        <img class="modal__lightbox-picture" src="${picture}" alt="${title}" tabindex=0>
-        <p class="modal__lightbox-media-title" aria-hidden="true">${title}</p>
- 
+    <div class="modal__lightbox-media-container">
+        <img class="modal__lightbox-picture" src="${picture}" alt="${media.title}" tabindex=0>
+        <p class="modal__lightbox-media-title" aria-hidden="true">${media.title}</p>
+    </div>
     `;
-  } else if (type === 'video' && src != null) {
+  } else if (media.type === 'video' && media.src != null) {
     mediaPicture = `
       <div class="modal__lightbox-media-container">
-          <video aria-labelledby="videoTitle" class="modal__lightbox-picture" controls>
+          <video aria-labelledby="video-title" class="modal__lightbox-picture" controls>
             <source src=
             "${picture}"  type="video/mp4">
           </video>
-          <p id="videoTitle" class="modal__lightbox-media-title">${title}</p> 
+          <p id="video-title" class="modal__lightbox-media-title">${media.title}</p> 
       </div>
           `;
   } else {
     mediaPicture = `<div aria-label="absence de media">Absence de media</div>`;
   }
 
-  mediaLightBox.innerHTML = mediaPicture;
-  return mediaLightBox;
+  mediaLightbox.innerHTML = mediaPicture;
+  return mediaLightbox;
 };

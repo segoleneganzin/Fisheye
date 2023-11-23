@@ -13,19 +13,15 @@ import { manageAccessibilityFocus } from './accessibility.js';
 const initContactForm = (closeModal, photographer) => {
   // we retrieve the photographer in preparation for sending him a message
   // directly to his e-mail address (when it's added to the database)
-  // const email = photographer.email
-  const form = document.querySelector('#form');
+  // photographer.email
+  const form = document.getElementById('contact-form');
   // manage form when submit
   form.addEventListener('submit', (event) => {
-    // prevents default behavior (reload)
     event.preventDefault();
     manageForm(form, closeModal);
-
     // manage focus on first invalid form data
-    if (document.querySelector('input:invalid')) {
-      document.querySelector('input:invalid').focus();
-    } else if (document.querySelector('textarea:invalid')) {
-      document.querySelector('textarea:invalid').focus();
+    if (document.querySelector('.input-error')) {
+      document.querySelector('.input-error').focus();
     }
   });
 };
@@ -33,7 +29,7 @@ const initContactForm = (closeModal, photographer) => {
 /**
  * This function retrieves information from the reservation form
  * and tests whether the fields are valid.
- * @param {html} form
+ * @param {HTMLElement} form
  * @param {function} closeModal
  */
 const manageForm = (form, closeModal) => {
@@ -113,17 +109,17 @@ const manageForm = (form, closeModal) => {
  * @returns {boolean}
  */
 function checkInput(input, condition, errorMessage) {
-  let res = true;
+  let valid = true;
   if (!condition) {
     printErrorMessage(errorMessage, input);
     input.setAttribute('aria-invalid', 'true');
-    res = false;
+    valid = false;
   } else {
     // clear the error message if exists
     clearErrorMessage(input);
     input.setAttribute('aria-invalid', 'false');
   }
-  return res;
+  return valid;
 }
 /**
  * This function displays the error message passed as a parameter
@@ -151,9 +147,7 @@ function printErrorMessage(message, parentElement) {
  * @param {object} parentElement
  */
 function clearErrorMessage(parentElement) {
-  const spanErrorMessage = document.getElementById(
-    `erreur-${parentElement.id}`
-  );
+  const spanErrorMessage = document.getElementById(`error-${parentElement.id}`);
   if (spanErrorMessage) {
     spanErrorMessage.remove();
     parentElement.classList.remove('input-error');
@@ -165,6 +159,8 @@ function clearErrorMessage(parentElement) {
 }
 /**
  * this function hide the form and show a validation message
+ * @param {HTMLElement} form
+ * @param {function} closeModal
  */
 function displayContactValidation(form, closeModal) {
   const contactValidationDiv = document.querySelector(
@@ -176,7 +172,8 @@ function displayContactValidation(form, closeModal) {
   closeValidation.addEventListener('click', () => {
     closeModal();
   });
-  // accessibility
+
+  // accessibility trap focus
   const closeModalBtn = document.querySelector(`.modal__contact-close-button`);
   manageAccessibilityFocus(
     contactValidationDiv,
